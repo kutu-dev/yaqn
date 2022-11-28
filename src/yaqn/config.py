@@ -1,9 +1,8 @@
 from pathlib import Path
 import tomllib
-import exceptions
 
-DEFAULT_CONFIG_PATH: Path = Path(Path.home(), 'config')
-DEFAULT_NOTES_PATH: Path = Path(Path.home(), 'config') # TODO REALISTIC PATH
+DEFAULT_CONFIG_PATH: Path = Path(Path.home(), '.config')
+DEFAULT_NOTES_PATH: Path = Path(Path.home(), '.config') # TODO REALISTIC PATH
 
 def init_config(custom_path: Path | None = None) -> Path:
     """
@@ -11,7 +10,7 @@ def init_config(custom_path: Path | None = None) -> Path:
     """
     config_path: Path = DEFAULT_CONFIG_PATH
 
-    if custom_path != None:
+    if custom_path is not None:
         config_path = custom_path
 
     if not config_path.exists() or not config_path.is_dir():
