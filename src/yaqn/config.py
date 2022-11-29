@@ -1,8 +1,9 @@
 from pathlib import Path
 import tomllib
 
+#! THIS IS NOT THE WINDOWS STANDARD
 DEFAULT_CONFIG_PATH: Path = Path(Path.home(), '.config')
-DEFAULT_NOTES_PATH: Path = Path(Path.home(), '.config') # TODO REALISTIC PATH
+DEFAULT_NOTES_PATH: Path = Path(Path.home(), 'Documents', 'notes')
 
 def init_config(custom_path: Path | None = None) -> Path:
     """
@@ -62,4 +63,4 @@ def read_config(custom_path: Path | None = None) -> Path:
     check_config(config_path)
 
     with open(config_path, 'rb') as config:
-        return tomllib.load(config)['notes_path']
+        return Path(tomllib.load(config)['notes_path'])

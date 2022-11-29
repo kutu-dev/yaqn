@@ -1,6 +1,7 @@
 import config
 from pathlib import Path
 from argparse import ArgumentParser, Namespace
+from gui import Gui
 
 parser: ArgumentParser = ArgumentParser(
     prog='yaqn',
@@ -28,3 +29,11 @@ if args.custom_config_path is not None:
 
 notes_path: Path = config.read_config(Path(Path.home(), 'Documents/dev/yaqn/src/yaqn/config'))
 # notes_path: Path = config.read_config(custom_config_path) # ! CORRECT WAY IN DEPLOY
+
+gui: Gui = Gui(notes_path)
+
+# TODO:
+# ! Windows friendly paths -> config.py:4
+# * Custom extension
+#  Correct deploy -> main.py:30-31
+# Remove .gitignore config directory
