@@ -1,9 +1,16 @@
 from pathlib import Path
+import platform
 import tomllib
 
-#! THIS IS NOT THE WINDOWS STANDARD
-DEFAULT_CONFIG_PATH: Path = Path(Path.home(), '.config')
+# Define the default paths according to the OS
+
+if platform.system() == 'Windows':
+    DEFAULT_CONFIG_PATH: Path = Path(Path.home(), 'AppData', 'Roaming')
+else:
+    DEFAULT_CONFIG_PATH: Path = Path(Path.home(), '.config')
 DEFAULT_NOTES_PATH: Path = Path(Path.home(), 'Documents', 'notes')
+
+DEFAULT_EXTENSION: str = 'md'
 
 def init_config(custom_path: Path | None = None) -> Path:
     """
@@ -42,7 +49,7 @@ def check_config(config_path: Path) -> None:
         # Check if the config is following the expected structure
         loaded_config: dict = tomllib.load(config)
         match loaded_config:
-            case {'notes_path': str()}:
+            case {'notes_path': str(), 'extension': str()}:
                 pass
             case _:
                 regenerate_config(config_path)
@@ -53,9 +60,12 @@ def regenerate_config(config_path: Path) -> None:
     Rewrite the config file with all the defaults.
     """
     with open(config_path, 'w') as config:
-        config.write(f'notes_path = \'{DEFAULT_NOTES_PATH}\'')
+        config.writelines([
+            f'notes_path = \'{DEFAULT_NOTES_PATH}\'',
+            f'\nextension = \'{DEFAULT_EXTENSION}\''
+        ])
 
-def read_config(custom_path: Path | None = None) -> Path:
+def read_config(custom_path: Path | None = None) -> dict[str, any]:
     """
     Read the config file, check it and repair it if is necessary.
     """
@@ -63,4 +73,8 @@ def read_config(custom_path: Path | None = None) -> Path:
     check_config(config_path)
 
     with open(config_path, 'rb') as config:
-        return Path(tomllib.load(config)['notes_path'])
+        data: dict[str, any] = tomllib.load(config)
+        return {
+            'notes_path': Path(data['notes_path']),
+            'extension': data['extension']
+            }
