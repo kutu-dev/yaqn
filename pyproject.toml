@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "yaqn"
 version = "0.1.0"
-description = "A markdown quicknote app made in python and gtk."
+description = "A quicknote app made in python and tkinter."
 authors = ["kutu-dev"]
 license = "MIT License"
 readme = "README.md"
