@@ -3,7 +3,6 @@ import platform
 import tomllib
 
 # Define the default paths according to the OS
-
 if platform.system() == 'Windows':
     DEFAULT_CONFIG_PATH: Path = Path(Path.home(), 'AppData', 'Roaming')
 else:
@@ -21,16 +20,16 @@ def init_config(custom_path: Path | None = None) -> Path:
     if custom_path is not None:
         config_path = custom_path
 
-    if not config_path.exists() or not config_path.is_dir():
+    if not config_path.is_dir():
         config_path.mkdir()
 
     yaqn_path: Path = Path(config_path, 'yaqn')
     yaqn_file: Path = Path(yaqn_path, 'config.toml')
 
-    if not yaqn_path.exists() or not yaqn_path.is_dir():
+    if not yaqn_path.is_dir():
         yaqn_path.mkdir()
 
-    if not yaqn_file.exists() or not yaqn_file.is_file():
+    if not yaqn_file.is_file():
         yaqn_file.touch()
 
     return yaqn_file

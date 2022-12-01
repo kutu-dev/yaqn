@@ -11,8 +11,10 @@ class Gui(tkinter.Tk):
         self.notes_dir_path: Path = notes_path
         self.extension = extension
 
-        self.title('YAQN')
+        self.time_creation_note: str = datetime.now().strftime('%H%M%S-%d%m%Y')
         self.bind_all('<Control-Return>', self.save_note_and_exit)
+
+        self.title(f'YAQN - {self.time_creation_note}')
 
         # Set the widgets
         self.set_widgets()
@@ -65,8 +67,7 @@ class Gui(tkinter.Tk):
         # Set the note file
         self.notes_dir_path.mkdir(parents=True, exist_ok=True)
 
-        datetime_file_name: str = datetime.now().strftime('%H%M%S-%d%m%Y')
-        note_path: Path = Path(self.notes_dir_path, f'{datetime_file_name}.{self.extension}')
+        note_path: Path = Path(self.notes_dir_path, f'{self.time_creation_note}.{self.extension}')
 
         # Get the textbox data and save it
         note:str = self.input.get('1.0', 'end-1c')

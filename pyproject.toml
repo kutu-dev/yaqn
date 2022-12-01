@@ -6,6 +6,9 @@ authors = ["kutu-dev"]
 license = "MIT License"
 readme = "README.md"
 
+[tool.poetry.scripts]
+yaqn = "yaqn.main:main"
+
 [tool.poetry.dependencies]
 python = "^3.11"
 customtkinter = "^4.6.3"
