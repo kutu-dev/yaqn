@@ -10,17 +10,18 @@ class Gui(tkinter.Tk):
 
         self.notes_dir_path: Path = notes_path
         self.extension = extension
-
-        self.time_creation_note: str = datetime.now().strftime('%H%M%S-%d%m%Y')
         self.bind_all('<Control-Return>', self.save_note_and_exit)
 
-        self.title(f'YAQN - {self.time_creation_note}')
+        self.title('New Note')
 
         # Set the widgets
         self.set_widgets()
         self.input.focus_set()
+
+        # Start the loops
         self.scrollbar_loop()
-        
+        self.title_loop()
+
         self.mainloop()
     
     def set_widgets(self) -> None:
@@ -50,6 +51,21 @@ class Gui(tkinter.Tk):
         self.menu = tkinter.Menu()
         self.config(menu=self.menu)
 
+    def title_loop(self):
+        """
+        Updates the title text according the first line in the textbox.
+        """
+        new_title: str = self.input.get('1.0', '1.end')
+        if len(new_title) >= 20:
+            new_title = new_title[:17] + '...'
+
+        if new_title != '':
+            self.title(new_title)
+        else:
+            self.title('New Note')
+
+        self.after(1, self.title_loop)
+
     def scrollbar_loop(self):
         """
         Check if the number of lines has exceeded the maximum of the textbox and show or hide a scrollbar as appropriate.
@@ -63,11 +79,29 @@ class Gui(tkinter.Tk):
 
         self.after(1, self.scrollbar_loop)
 
+    def check_note_path(self, note_path: Path) -> Path:
+        if not note_path.is_file():
+            return note_path
+        
+        datetime_now: str = datetime.now().strftime('%H%M%S-%d%m%Y')
+        new_filename: str = f'{note_path.stem}-{datetime_now}{note_path.suffix}'
+
+        return self.check_note_path(Path(note_path.parent, new_filename))
+
     def save_note_and_exit(self, event: tkinter.Event) -> None:
         # Set the note file
         self.notes_dir_path.mkdir(parents=True, exist_ok=True)
 
-        note_path: Path = Path(self.notes_dir_path, f'{self.time_creation_note}.{self.extension}')
+        # Check if the first line in the textbox is valid as a filename
+        note_filename: str
+        if self.input.get('1.0', '1.end') != '':
+            note_filename = self.input.get('1.0', '1.end')
+        else:
+            note_filename = datetime.now().strftime('%H%M%S-%d%m%Y')
+
+        # Get the note path and check if its valid
+        note_path: Path = Path(self.notes_dir_path, f'{note_filename}.{self.extension}')
+        note_path = self.check_note_path(note_path)
 
         # Get the textbox data and save it
         note:str = self.input.get('1.0', 'end-1c')

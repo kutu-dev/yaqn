@@ -2,6 +2,7 @@ from . import config
 from pathlib import Path
 from argparse import ArgumentParser, Namespace
 from .gui import Gui
+import typing
 
 def main() -> None:
     parser: ArgumentParser = ArgumentParser(
@@ -22,11 +23,12 @@ def main() -> None:
     args: Namespace = parser.parse_args()
 
     # Check if the custom config path selected by the user is a dir
-    if args.custom_config_path is not None and custom_config_path.is_dir():
-        custom_config_path: Path = Path(args.custom_config_path)
+    custom_config_path: Path | None
+    if args.custom_config_path is not None and Path(args.custom_config_path).is_dir():
+        custom_config_path = Path(args.custom_config_path)
     else:
-        custom_config_path: None = None
+        custom_config_path = None
 
-    config_data: dict[str, any] = config.read_config(custom_config_path)
+    config_data: dict[str, typing.Any] = config.read_config(custom_config_path)
 
     gui: Gui = Gui(config_data['notes_path'], config_data['extension'])

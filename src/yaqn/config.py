@@ -1,21 +1,17 @@
 from pathlib import Path
 import platform
 import tomllib
+import typing
 
-# Define the default paths according to the OS
-if platform.system() == 'Windows':
-    DEFAULT_CONFIG_PATH: Path = Path(Path.home(), 'AppData', 'Roaming')
-else:
-    DEFAULT_CONFIG_PATH: Path = Path(Path.home(), '.config')
+# Define the default paths
 DEFAULT_NOTES_PATH: Path = Path(Path.home(), 'Documents', 'notes')
-
 DEFAULT_EXTENSION: str = 'md'
 
 def init_config(custom_path: Path | None = None) -> Path:
     """
     Check if the config path and file exist and configure a custom path if it is given.
     """
-    config_path: Path = DEFAULT_CONFIG_PATH
+    config_path: Path = get_default_config_path()
 
     if custom_path is not None:
         config_path = custom_path
@@ -34,6 +30,12 @@ def init_config(custom_path: Path | None = None) -> Path:
 
     return yaqn_file
 
+def get_default_config_path() -> Path:
+    if platform.system() == 'Windows':
+        return Path(Path.home(), 'AppData', 'Roaming')
+    else:
+        return Path(Path.home(), '.config')
+
 def check_config(config_path: Path) -> None:
     """
     Check if the config file is valid
@@ -41,12 +43,11 @@ def check_config(config_path: Path) -> None:
     with open(config_path, 'rb') as config:
         # Check if the config is a valid toml file
         try:
-            tomllib.load(config)
+            loaded_config: dict = tomllib.load(config)
         except tomllib.TOMLDecodeError:
             regenerate_config(config_path)
 
         # Check if the config is following the expected structure
-        loaded_config: dict = tomllib.load(config)
         match loaded_config:
             case {'notes_path': str(), 'extension': str()}:
                 pass
@@ -64,7 +65,7 @@ def regenerate_config(config_path: Path) -> None:
             f'\nextension = \'{DEFAULT_EXTENSION}\''
         ])
 
-def read_config(custom_path: Path | None = None) -> dict[str, any]:
+def read_config(custom_path: Path | None = None) -> dict[str, typing.Any]:
     """
     Read the config file, check it and repair it if is necessary.
     """
@@ -72,7 +73,7 @@ def read_config(custom_path: Path | None = None) -> dict[str, any]:
     check_config(config_path)
 
     with open(config_path, 'rb') as config:
-        data: dict[str, any] = tomllib.load(config)
+        data: dict[str, typing.Any] = tomllib.load(config)
         return {
             'notes_path': Path(data['notes_path']),
             'extension': data['extension']
