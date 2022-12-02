@@ -1,7 +1,7 @@
 # YAQN - Yeet Another Quick Note
 > A fast, easy and OOTB app for taking your notes made in Python.
 
-<img src="./assets/app.png" alt="A screenshot of the app" max-width=200>
+<img src="./assets/app.png" alt="A screenshot of the app" width=542>
 
 ## Installation
 ```
