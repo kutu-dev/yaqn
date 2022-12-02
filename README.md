@@ -40,7 +40,8 @@ notes_path = '/path/to/notes/directory'
 extension = 'md'
 ```
 And this is its structure:
-| Parameter | Description | 
+
+| Parameter | Description |
 | --- | --- |
-| `notes_path` | Define the path to the directory the notes will be saved. |
-| `extension` | Define the extension the notes will be saves. _Remember to **not** put `.` before the extension itself._ |
+| `notes_path` | Define the path to the directory the notes will be saved. |
+| `extension` | Define the extension the notes will be saves. _Remember to **not** put `.` before the extension itself._ |
