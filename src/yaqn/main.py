@@ -3,6 +3,7 @@ from pathlib import Path
 from argparse import ArgumentParser, Namespace
 from .gui import Gui
 import typing
+import sys
 
 def main() -> None:
     parser: ArgumentParser = ArgumentParser(
@@ -11,13 +12,21 @@ def main() -> None:
     )
 
     parser.add_argument(
-        '-c',
         '--config',
         default=None,
         required=False,
         dest='custom_config_path',
         help='Set a custom path (absolute) to the config file.',
         type=str,
+    )
+
+    parser.add_argument(
+        '--check',
+        default=False,
+        required=False,
+        dest='check_mode',
+        help='Only run the config file checks and restore it if is necessary.',
+        action='store_true',
     )
 
     args: Namespace = parser.parse_args()
@@ -30,5 +39,10 @@ def main() -> None:
         custom_config_path = None
 
     config_data: dict[str, typing.Any] = config.read_config(custom_config_path)
+
+    # If check mode is activated not start the gui
+    if args.check_mode:
+        print('[ INFO ] Check mode -> Config checked and operative')
+        sys.exit(0)
 
     gui: Gui = Gui(config_data['notes_path'], config_data['extension'])
