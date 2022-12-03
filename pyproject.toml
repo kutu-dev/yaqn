@@ -5,6 +5,11 @@ description = "A quicknotes app made in python and tkinter."
 authors = ["kutu-dev"]
 license = "MIT License"
 readme = "README.md"
+keywords = ["notes"]
+
+[tool.poetry.urls]
+"Homepage" = "https://github.com/kutu-dev/yaqn"
+"Bug Tracker" = "https://github.com/kutu-dev/yaqn/issues"
 
 [tool.poetry.scripts]
 yaqn = "yaqn.main:main"
