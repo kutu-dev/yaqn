@@ -14,6 +14,14 @@ class Gui(tkinter.Tk):
 
         self.title('New Note')
 
+        # Set the logo of the app and make it MacOS compatible
+        logo_path: Path = Path(
+            Path(__file__).parent, # Get the path to the root of the package
+            'assets/logo.png'
+            ).absolute()
+        logo: tkinter.Image = tkinter.Image('photo', file=f'{logo_path}')
+        self.tk.call('wm','iconphoto', self._w, logo)
+
         # Set the widgets
         self.set_widgets()
         self.input.focus_set()

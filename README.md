@@ -1,7 +1,7 @@
 # YAQN - Yeet Another Quick Note
 > A fast, easy and OOTB app for taking your notes made in Python.
 
-<img src="./assets/app.png" alt="A screenshot of the app" width=542>
+<img src="./assets/screenshots/app.png" alt="A screenshot of the app" width=542>
 
 ## Installation
 ```
@@ -14,7 +14,9 @@ Run the `yaqn` command, it will open the app. To save the note and close the app
 
 ### Open with a keyboard shortcut
 This can't be done automatically by `pip`, please use the correct for your OS:
-_**Comming soon...**_
+- MacOS: Use [Karabiner Elements](https://karabiner-elements.pqrs.org/) and import [this rule](https://github.com/kutu-dev/yaqn/tree/master/assets/karabiner-rules/open-yaqn.json).
+- Windows: _Too complex too configure unfortunately..._
+- Linux, FreeBSD and others depend of the window manager you're using.
 
 ## Configuration
 Your configuration file is saved by default in:
@@ -45,3 +47,11 @@ And this is its structure:
 | --- | --- |
 | `notes_path` | Define the path to the directory the notes will be saved. |
 | `extension` | Define the extension the notes will be saves. _Remember to **not** put `.` before the extension itself._ |
+
+## Author
+
+Created with :heart: by [Kutu](https://kutu-dev.github.io/).
+> - GitHub - [kutu-dev](https://github.com/kutu-dev)
+> - Twitter - [@kutu-dev](https://twitter.com/kutu_dev)
+
+Logo of the app created by [vladlucha](https://macosicons.com/#/u/vladlucha) (account deleted unfortunately) in [MacOS Icons](https://macosicons.com/#/).

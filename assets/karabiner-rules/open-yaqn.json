@@ -1,0 +1,1 @@
+{"title":"Open a YAQN window with LCtrl-LOpt-T","rules":[{"description":"Open a YAQN window with LCtrl-LOpt-T.","manipulators":[{"from":{"key_code":"q","modifiers":{"mandatory":["left_control","left_alt"]}},"to":[{"shell_command":"yaqn"}],"type":"basic"}]}]}
