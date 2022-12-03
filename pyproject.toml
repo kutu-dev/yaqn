@@ -8,11 +8,11 @@ readme = "README.md"
 keywords = ["notes", "utility", "portable"]
 homepage = "https://github.com/kutu-dev/yaqn"
 repository = "https://github.com/kutu-dev/yaqn"
-classifiers = {
+classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Operating System :: OS Independent",
     "Topic :: Utilities"
-}
+]
 
 [tool.poetry.scripts]
 yaqn = "yaqn.main:main"
