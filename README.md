@@ -14,7 +14,7 @@ Run the `yaqn` command, it will open the app. To save the note and close the app
 
 ### Open with a keyboard shortcut
 This can't be done automatically by `pip`, please use the correct for your OS:
-- MacOS: Use [Karabiner Elements](https://karabiner-elements.pqrs.org/) and import [this rule](https://github.com/kutu-dev/yaqn/tree/master/assets/karabiner-rules/open-yaqn.json).
+- MacOS: Use [Karabiner Elements](https://karabiner-elements.pqrs.org/) and import [this rule](https://github.com/kutu-dev/yaqn/tree/master/assets/karabiner-rules/open-yaqn.json). This should work in any standard python installation, if you a using `pyenv` or similar this rule should be modified manually.
 - Windows: _Too complex too configure unfortunately..._
 - Linux, FreeBSD and others depend of the window manager you're using.
 
