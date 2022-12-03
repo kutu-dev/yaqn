@@ -1,4 +1,5 @@
 from . import config
+from . import __version__
 from pathlib import Path
 from argparse import ArgumentParser, Namespace, _MutuallyExclusiveGroup
 from .gui import Gui
@@ -8,7 +9,8 @@ import sys
 def main() -> None:
     parser: ArgumentParser = ArgumentParser(
         prog='yaqn',
-        description='A markdown quicknote app made in python and gtk.'
+        description='A markdown quicknote app made in python and gtk.',
+        epilog='Created with ♥ by Kutu (https://kutu-dev.github.io/)'
     )
 
     parser.add_argument(
@@ -22,6 +24,15 @@ def main() -> None:
 
     modes_group: _MutuallyExclusiveGroup = parser.add_mutually_exclusive_group()
     
+    modes_group.add_argument(
+        '--version',
+        default=False,
+        required=False,
+        dest='version_mode',
+        help='Return the current version installed of YAQN.',
+        action='store_true',
+    )
+
     modes_group.add_argument(
         '--check',
         default=False,
@@ -41,6 +52,10 @@ def main() -> None:
     )
 
     args: Namespace = parser.parse_args()
+
+    if args.version_mode:
+        info(f'YAQN Version {__version__}')
+        sys.exit(0)
 
     # Check if the custom config path selected by the user is a dir
     custom_config_path: Path | None
