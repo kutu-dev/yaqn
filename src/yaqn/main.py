@@ -2,7 +2,7 @@ from . import config
 from pathlib import Path
 from argparse import ArgumentParser, Namespace, _MutuallyExclusiveGroup
 from .gui import Gui
-import typing
+from .terminal import info
 import sys
 
 def main() -> None:
@@ -53,12 +53,12 @@ def main() -> None:
 
     # If check mode is activated not start the gui
     if args.check_mode:
-        print('[ INFO ] Check mode -> Config checked and operative')
+        info('Config checked and operative')
         sys.exit(0)
 
     if args.restore_mode:
         config.restore_config(custom_config_path)
-        print('[ INFO ] Default configuration restored')
+        info('Default configuration restored')
         sys.exit(0)
 
     gui: Gui = Gui(config_data)

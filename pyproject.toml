@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "yaqn"
-version = "1.0.3"
+version = "1.0.4"
 description = "A quicknotes app made in python and tkinter."
 authors = ["kutu-dev"]
 license = "MIT License"

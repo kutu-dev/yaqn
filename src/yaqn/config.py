@@ -1,5 +1,6 @@
 from pathlib import Path
 from dataclasses import dataclass
+from .terminal import warn
 import platform
 import tomllib
 import typing
@@ -51,10 +52,14 @@ def check_config(config_path: Path) -> None:
     """
     with open(config_path, 'rb') as config:
         # Check if the config is a valid toml file
+        loaded_config: dict
         try:
-            loaded_config: dict = tomllib.load(config)
+            loaded_config = tomllib.load(config)
         except tomllib.TOMLDecodeError:
             regenerate_config(config_path)
+            # Load the config again and check the structure
+            check_config(config_path)
+            return
 
         # Check if the config is following the expected structure
         match loaded_config:
@@ -69,10 +74,13 @@ def check_config(config_path: Path) -> None:
                 regenerate_config(config_path)
 
 
-def regenerate_config(config_path: Path) -> None:
+def regenerate_config(config_path: Path, silent: bool = False) -> None:
     """
     Rewrite the config file with all the defaults.
     """
+    if not silent:
+        warn('The config was invalid and it has been restored to its defaults')
+    
     with open(config_path, 'w') as config:
         config.writelines([
             f'notes_path = \'{DEFAULT_NOTES_PATH}\'',
@@ -103,4 +111,4 @@ def restore_config(custom_path: Path | None = None) -> None:
     Restore the configuration to its defaults values
     """
     config_path: Path = init_config(custom_path)
-    regenerate_config(config_path)
+    regenerate_config(config_path, True)

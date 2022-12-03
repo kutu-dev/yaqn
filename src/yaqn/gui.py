@@ -6,10 +6,10 @@ from pathlib import Path
 import sys
 
 class Gui(tkinter.Tk):
-    def __init__(self, config_data: config_data) -> None:
+    def __init__(self, config: config_data) -> None:
         super().__init__()
 
-        self.config_data: dict = config_data
+        self.user_config: config_data = config
         self.bind_all('<Control-Return>', self.save_note_and_exit)
 
         self.title('New Note')
@@ -20,7 +20,8 @@ class Gui(tkinter.Tk):
             'assets/logo.png'
             ).absolute()
         logo: tkinter.Image = tkinter.Image('photo', file=f'{logo_path}')
-        self.tk.call('wm','iconphoto', self._w, logo)
+        # Disable type checking because _w is a internal Tkinter var and cant be detected by type checkers
+        self.tk.call('wm','iconphoto', self._w, logo)  # type: ignore
 
         # Set the widgets
         self.set_widgets()
@@ -91,7 +92,7 @@ class Gui(tkinter.Tk):
         save_note(
             self.input.get('1.0', '1.end'),
             self.input.get('1.0', 'end-1c'),
-            self.config_data
+            self.user_config
         )
         
         sys.exit(0)
