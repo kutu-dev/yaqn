@@ -8,8 +8,8 @@ readme = "README.md"
 keywords = ["notes"]
 
 [tool.poetry.urls]
-"Homepage" = "https://github.com/kutu-dev/yaqn"
 "Bug Tracker" = "https://github.com/kutu-dev/yaqn/issues"
+"Homepage" = "https://github.com/kutu-dev/yaqn"
 
 [tool.poetry.scripts]
 yaqn = "yaqn.main:main"
