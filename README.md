@@ -1,7 +1,7 @@
 # YAQN - Yeet Another Quick Note
 > A fast, easy and OOTB app for taking your notes made in Python.
 
-<img src="./assets/screenshots/app.png" alt="Screenshot of the app" width=542>
+<img src="https://raw.githubusercontent.com/kutu-dev/yaqn/master/assets/screenshots/app.png" alt="Screenshot of the app" width=542>
 
 ## Installation
 ```
@@ -47,6 +47,11 @@ And this is its structure:
 | --- | --- |
 | `notes_path` | Define the path to the directory the notes will be saved. |
 | `extension` | Define the extension the notes will be saves. _Remember to **not** put `.` before the extension itself._ |
+| `no_whitespaces` | Define if YAQN should convert all whitespaces to hyphens `-` in the file name. |
+| `no_uppercase` | Define if YAQN should convert all uppercase letters to lowercase. |
+
+### Restore configuration to default
+Use the command `yaqn --restore` to regenerate the configuration with its defaults values.
 
 ## Author
 

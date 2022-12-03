@@ -1,6 +1,6 @@
 from . import config
 from pathlib import Path
-from argparse import ArgumentParser, Namespace
+from argparse import ArgumentParser, Namespace, _MutuallyExclusiveGroup
 from .gui import Gui
 import typing
 import sys
@@ -20,12 +20,23 @@ def main() -> None:
         type=str,
     )
 
-    parser.add_argument(
+    modes_group: _MutuallyExclusiveGroup = parser.add_mutually_exclusive_group()
+    
+    modes_group.add_argument(
         '--check',
         default=False,
         required=False,
         dest='check_mode',
         help='Only run the config file checks and restore it if is necessary.',
+        action='store_true',
+    )
+
+    modes_group.add_argument(
+        '--restore',
+        default=False,
+        required=False,
+        dest='restore_mode',
+        help='Restore the configuration to its defaults values.',
         action='store_true',
     )
 
@@ -38,11 +49,16 @@ def main() -> None:
     else:
         custom_config_path = None
 
-    config_data: dict[str, typing.Any] = config.read_config(custom_config_path)
+    config_data: config.config_data = config.read_config(custom_config_path)
 
     # If check mode is activated not start the gui
     if args.check_mode:
         print('[ INFO ] Check mode -> Config checked and operative')
         sys.exit(0)
 
-    gui: Gui = Gui(config_data['notes_path'], config_data['extension'])
+    if args.restore_mode:
+        config.restore_config(custom_config_path)
+        print('[ INFO ] Default configuration restored')
+        sys.exit(0)
+
+    gui: Gui = Gui(config_data)

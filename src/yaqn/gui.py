@@ -1,15 +1,15 @@
+from .notes import save_note
+from .config import config_data
 import tkinter
 import tkinter.font
 from pathlib import Path
-from datetime import datetime
 import sys
 
 class Gui(tkinter.Tk):
-    def __init__(self, notes_path: Path, extension: str) -> None:
+    def __init__(self, config_data: config_data) -> None:
         super().__init__()
 
-        self.notes_dir_path: Path = notes_path
-        self.extension = extension
+        self.config_data: dict = config_data
         self.bind_all('<Control-Return>', self.save_note_and_exit)
 
         self.title('New Note')
@@ -87,35 +87,11 @@ class Gui(tkinter.Tk):
 
         self.after(1, self.scrollbar_loop)
 
-    def check_note_path(self, note_path: Path) -> Path:
-        if not note_path.is_file():
-            return note_path
-        
-        datetime_now: str = datetime.now().strftime('%H%M%S-%d%m%Y')
-        new_filename: str = f'{note_path.stem}-{datetime_now}{note_path.suffix}'
-
-        return self.check_note_path(Path(note_path.parent, new_filename))
-
     def save_note_and_exit(self, event: tkinter.Event) -> None:
-        # Set the note file
-        self.notes_dir_path.mkdir(parents=True, exist_ok=True)
-
-        # Check if the first line in the textbox is valid as a filename
-        note_filename: str
-        if self.input.get('1.0', '1.end') != '':
-            note_filename = self.input.get('1.0', '1.end')
-        else:
-            note_filename = datetime.now().strftime('%H%M%S-%d%m%Y')
-
-        # Get the note path and check if its valid
-        note_path: Path = Path(self.notes_dir_path, f'{note_filename}.{self.extension}')
-        note_path = self.check_note_path(note_path)
-
-        # Get the textbox data and save it
-        note:str = self.input.get('1.0', 'end-1c')
-
-        note_path.touch()
-        with open(note_path, 'w') as file:
-            file.write(note)
+        save_note(
+            self.input.get('1.0', '1.end'),
+            self.input.get('1.0', 'end-1c'),
+            self.config_data
+        )
         
         sys.exit(0)
