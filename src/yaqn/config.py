@@ -37,6 +37,7 @@ def init_config(custom_path: Path | None = None) -> Path:
 
     if not yaqn_file.is_file():
         yaqn_file.touch()
+        regenerate_config(yaqn_file, True)
 
     return yaqn_file
 
@@ -58,7 +59,6 @@ def check_config(config_path: Path) -> None:
         except tomllib.TOMLDecodeError:
             regenerate_config(config_path)
             # Load the config again and check the structure
-            check_config(config_path)
             return
 
         # Check if the config is following the expected structure
@@ -78,6 +78,10 @@ def regenerate_config(config_path: Path, silent: bool = False) -> None:
     """
     Rewrite the config file with all the defaults.
     """
+
+    if not config_path.is_file():
+        warn('Not config file was found, use \'yaqn --check\' to create a new one')
+
     if not silent:
         warn('The config was invalid and it has been restored to its defaults')
     
@@ -86,7 +90,8 @@ def regenerate_config(config_path: Path, silent: bool = False) -> None:
             f'notes_path = \'{DEFAULT_NOTES_PATH}\'',
             f'\nextension = \'{DEFAULT_EXTENSION}\'',
             f'\nno_whitespaces = false',
-            f'\nno_uppercase = false'
+            f'\nno_uppercase = false',
+            f'\n'
         ])
 
 def read_config(custom_path: Path | None = None) -> config_data:
