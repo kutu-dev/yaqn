@@ -4,10 +4,23 @@ from pathlib import Path
 import tkinter
 
 class About(tkinter.Toplevel):
-    def __init__(self) -> None:
+    def __init__(
+            self,
+            parent_window_position_x: int,
+            parent_window_position_y: int, 
+            parent_window_size_x: int,
+            parent_window_size_y: int
+        ) -> None:
+
         super().__init__()
 
         self.set_widgets()
+        self.set_window_position(
+            parent_window_position_x,
+            parent_window_position_y,
+            parent_window_size_x,
+            parent_window_size_y
+        )
 
     def set_widgets(self) -> None:
         self.title('About YAQN')
@@ -83,3 +96,31 @@ class About(tkinter.Toplevel):
         self.other_authors_label.pack(
             pady=(0, 25)
         )
+
+    def set_window_position(
+        self,
+        parent_window_position_x: int,
+        parent_window_position_y: int, 
+        parent_window_size_x: int,
+        parent_window_size_y: int
+    ) -> None:
+
+        # Make the window transparent and after update it to avoid seeing the window change its position
+        self.attributes('-alpha', 0.0)
+        self.update()
+
+        window_width: int = self.winfo_width()
+        window_height: int = self.winfo_height()
+
+        screen_width: int = self.winfo_screenwidth()
+        screen_height: int = self.winfo_screenheight()
+
+        # Calculate the coordinates for the top left of the window
+        calculated_width: int = int(parent_window_position_x + parent_window_size_x/2 - window_width/2)
+        calculated_height: int = int(parent_window_position_y - window_height/8)
+
+        # Apply the correct position of the window
+        self.geometry(f'{window_width}x{window_height}+{calculated_width}+{calculated_height}')
+
+        # Make the window visible again
+        self.attributes('-alpha', 1.0)

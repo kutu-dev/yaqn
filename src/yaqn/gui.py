@@ -33,6 +33,9 @@ class Gui(tkinter.Tk):
         self.scrollbar_loop()
         self.title_loop()
 
+        # After all the widgets are drew position the window
+        self.set_window_position()
+
         # Set about menu
         self.about_menu_open: bool = False
         self.createcommand('tkAboutDialog', self.display_about_menu)
@@ -40,9 +43,6 @@ class Gui(tkinter.Tk):
         # Add about button in not Darwin OS
         if system() != 'Darwin':
             self.set_about_button()
-
-        # After all the widgets are drew position the window
-        self.set_window_position()
 
         # Redefine the exit custom to completely exit the app
         self.protocol('WM_DELETE_WINDOW', self.exit)
@@ -113,23 +113,23 @@ class Gui(tkinter.Tk):
         # Force an update to get the real size of the window
         self.update()
         
-        window_width: int = self.winfo_width()
-        window_height: int = self.winfo_height()
+        self.window_width: int = self.winfo_width()
+        self.window_height: int = self.winfo_height()
 
         screen_width: int = self.winfo_screenwidth()
         screen_height: int = self.winfo_screenheight()
 
         # Calculate the coordinates for the top left of the window
-        calculated_width: int = int(screen_width/2 - window_width/2)
-        calculated_height: int = int(screen_height/2 - window_width/2)
+        calculated_width: int = int(screen_width/2 - self.window_width/2)
+        calculated_height: int = int(screen_height/2 - self.window_height/2)
 
         # Apply the correct position of the window
-        self.geometry(f'{window_width}x{window_height}+{calculated_width}+{calculated_height}')
+        self.geometry(f'{self.window_width}x{self.window_height}+{calculated_width}+{calculated_height}')
 
     def display_about_menu(self, event: tkinter.Event | None = None) -> None:
         if self.about_menu_open == False:
             self.about_menu_open = True
-            self.about_menu: About = About()
+            self.about_menu: About = About(self.winfo_x(), self.winfo_y(), self.window_width, self.window_height)
             self.about_menu.protocol('WM_DELETE_WINDOW', self.close_about_menu)
 
     def close_about_menu(self) -> None:
