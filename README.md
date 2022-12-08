@@ -1,4 +1,4 @@
-# YAQN - Yeet Another Quick Note
+# YAQN - Yet Another Quick Note
 > A fast, easy and OOTB app for taking your notes made in Python.
 
 <img src="https://raw.githubusercontent.com/kutu-dev/yaqn/master/assets/screenshots/app.png" alt="Screenshot of the app" width=542>

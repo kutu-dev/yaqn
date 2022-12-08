@@ -1,5 +1,9 @@
-from .notes import save_note
+from . import __version__
 from .config import config_data
+from .about import About
+from .notes import save_note
+from .assets import get_logo_path_high_res
+from platform import system
 import tkinter
 import tkinter.font
 from pathlib import Path
@@ -10,15 +14,13 @@ class Gui(tkinter.Tk):
         super().__init__()
 
         self.user_config: config_data = config
-        self.bind_all('<Control-Return>', self.save_note_and_exit)
 
+        self.bind_all('<Control-Return>', self.save_note_and_exit)
+        self.resizable(False, False)
         self.title('New Note')
 
         # Set the logo of the app and make it MacOS compatible
-        logo_path: Path = Path(
-            Path(__file__).parent, # Get the path to the root of the package
-            'assets/logo.png'
-            ).absolute()
+        logo_path: Path = get_logo_path_high_res()
         logo: tkinter.Image = tkinter.Image('photo', file=f'{logo_path}')
         # Disable type checking because _w is a internal Tkinter var and cant be detected by type checkers
         self.tk.call('wm','iconphoto', self._w, logo)  # type: ignore
@@ -30,6 +32,17 @@ class Gui(tkinter.Tk):
         # Start the loops
         self.scrollbar_loop()
         self.title_loop()
+
+        # Set about menu
+        self.about_menu_open: bool = False
+        self.createcommand('tkAboutDialog', self.display_about_menu)
+
+        # Add about button in not Darwin OS
+        if system() != 'Darwin':
+            self.set_about_button()
+
+        # Redefine the exit custom to completely exit the app
+        self.protocol('WM_DELETE_WINDOW', self.exit)
 
         self.mainloop()
     
@@ -88,6 +101,30 @@ class Gui(tkinter.Tk):
 
         self.after(1, self.scrollbar_loop)
 
+    def display_about_menu(self, event: tkinter.Event | None = None) -> None:
+        if self.about_menu_open == False:
+            self.about_menu_open = True
+            self.about_menu: About = About()
+            self.about_menu.protocol('WM_DELETE_WINDOW', self.close_about_menu)
+
+    def close_about_menu(self) -> None:
+        self.about_menu_open = False
+        self.about_menu.destroy()
+
+    def set_about_button(self) -> None:
+        self.about_button: tkinter.Label = tkinter.Label(
+            self,
+            text='About YAQN'
+        )
+
+        self.about_button.place(
+            relx=0.85,
+            rely=0.9,
+            anchor='center'
+        )
+
+        self.about_button.bind('<Button-1>', self.display_about_menu)
+
     def save_note_and_exit(self, event: tkinter.Event) -> None:
         save_note(
             self.input.get('1.0', '1.end'),
@@ -95,4 +132,7 @@ class Gui(tkinter.Tk):
             self.user_config
         )
         
+        self.exit()
+
+    def exit(self):
         sys.exit(0)
