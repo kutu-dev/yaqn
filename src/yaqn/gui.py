@@ -33,16 +33,16 @@ class Gui(tkinter.Tk):
         self.scrollbar_loop()
         self.title_loop()
 
+        # Add about button in not Darwin OS
+        if system() != 'Darwin':
+            self.set_about_button()
+
         # After all the widgets are drew position the window
         self.set_window_position()
 
         # Set about menu
         self.about_menu_open: bool = False
         self.createcommand('tkAboutDialog', self.display_about_menu)
-
-        # Add about button in not Darwin OS
-        if system() != 'Darwin':
-            self.set_about_button()
 
         # Redefine the exit custom to completely exit the app
         self.protocol('WM_DELETE_WINDOW', self.exit)
