@@ -41,6 +41,9 @@ class Gui(tkinter.Tk):
         if system() != 'Darwin':
             self.set_about_button()
 
+        # After all the widgets are drew position the window
+        self.set_window_position()
+
         # Redefine the exit custom to completely exit the app
         self.protocol('WM_DELETE_WINDOW', self.exit)
 
@@ -105,6 +108,23 @@ class Gui(tkinter.Tk):
             self.scrollbar.pack_forget()
 
         self.after(1, self.scrollbar_loop)
+
+    def set_window_position(self):
+        # Force an update to get the real size of the window
+        self.update()
+        
+        window_width: int = self.winfo_width()
+        window_height: int = self.winfo_height()
+
+        screen_width: int = self.winfo_screenwidth()
+        screen_height: int = self.winfo_screenheight()
+
+        # Calculate the coordinates for the top left of the window
+        calculated_width: int = int(screen_width/2 - window_width/2)
+        calculated_height: int = int(screen_height/2 - window_width/2)
+
+        # Apply the correct position of the window
+        self.geometry(f'{window_width}x{window_height}+{calculated_width}+{calculated_height}')
 
     def display_about_menu(self, event: tkinter.Event | None = None) -> None:
         if self.about_menu_open == False:
