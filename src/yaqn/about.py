@@ -1,4 +1,4 @@
-from .assets import get_logo_path_low_res
+from .assets import get_logo_path_low_res, get_logo_path_high_res
 from . import __version__
 from pathlib import Path
 import tkinter
@@ -13,6 +13,12 @@ class About(tkinter.Toplevel):
         ) -> None:
 
         super().__init__()
+
+        # Set the logo of the app and make it MacOS compatible
+        logo_path: Path = get_logo_path_high_res()
+        logo: tkinter.Image = tkinter.Image('photo', file=f'{logo_path}')
+        # Disable type checking because _w is a internal Tkinter var and cant be detected by type checkers
+        self.tk.call('wm','iconphoto', self._w, logo)  # type: ignore
 
         self.set_widgets()
         self.set_window_position(
@@ -58,10 +64,13 @@ class About(tkinter.Toplevel):
         )
         self.title.pack()
 
+        font_subtitle: tkinter.font.Font = tkinter.font.Font(size=14)
+
         # Set the subtitle
         self.subtitle: tkinter.Label = tkinter.Label(
             self.text_frame,
-            text='Yet Another Quick Note'
+            text='Yet Another Quick Note',
+            font=font_subtitle
         )
         self.subtitle.pack()
 
