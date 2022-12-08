@@ -47,8 +47,9 @@ And this is its structure:
 | --- | --- |
 | `notes_path` | Define the path to the directory the notes will be saved. |
 | `extension` | Define the extension the notes will be saves. _Remember to **not** put `.` before the extension itself._ |
-| `no_whitespaces` | Define if YAQN should convert all whitespaces to hyphens `-` in the file name. |
+| `no_whitespaces` | Define if YAQN should convert all whitespaces to hyphens `-` in the file name. |
 | `no_uppercase` | Define if YAQN should convert all uppercase letters to lowercase. |
+| `no_firstline` | Define if YAQN should remove the first line of the note before save it (useful with apps like [ObsidianMD](https://obsidian.md/)). |
 
 ### Restore configuration to default
 Use the command `yaqn --restore` to regenerate the configuration with its defaults values.

@@ -7,6 +7,7 @@ def save_note(note_title: str, note_data: str, config_data: config_data):
         extension: str = config_data.extension
         no_whitespaces: bool = config_data.no_whitespaces
         no_uppercase: bool = config_data.no_uppercase
+        no_firstline: bool = config_data.no_firstline
 
         # Create the notes path
         notes_dir_path.mkdir(parents=True, exist_ok=True)
@@ -24,6 +25,11 @@ def save_note(note_title: str, note_data: str, config_data: config_data):
 
         if no_uppercase:
             note_filename = note_filename.lower()
+
+        if no_firstline:
+            # Split the text of the note in lines, discard the first line and convert to string
+            note_list_modified: list[str] = note_data.split('\n')[1:]
+            note_data = str().join(note_list_modified)
 
         # Get the note path and check if its valid
         note_path: Path = Path(notes_dir_path, f'{note_filename}.{extension}')

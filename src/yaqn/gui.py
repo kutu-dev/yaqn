@@ -51,8 +51,13 @@ class Gui(tkinter.Tk):
         font_size: tkinter.font.Font = tkinter.font.Font(size=20)
 
         # Input widget
+        self.input_frame: tkinter.Frame = tkinter.Frame(self)
+        self.input_frame.pack(
+            side=tkinter.TOP
+        )
+
         self.input = tkinter.Text(
-            self,
+            self.input_frame,
             highlightthickness=0,
             padx=20,
             pady=20,
@@ -63,7 +68,7 @@ class Gui(tkinter.Tk):
         self.input.pack(side=tkinter.LEFT)
 
         # Scrollbar widget
-        self.scrollbar = tkinter.Scrollbar()
+        self.scrollbar = tkinter.Scrollbar(self.input_frame)
 
         # Set the relation between the textbox and the scrollbar
         self.input.config(yscrollcommand=self.scrollbar.set)
@@ -112,16 +117,17 @@ class Gui(tkinter.Tk):
         self.about_menu.destroy()
 
     def set_about_button(self) -> None:
-        self.about_button: tkinter.Label = tkinter.Label(
-            self,
-            text='About YAQN'
+        self.about_frame: tkinter.Frame = tkinter.Frame(self)
+        self.about_frame.pack(
+            side=tkinter.BOTTOM
         )
 
-        self.about_button.place(
-            relx=0.85,
-            rely=0.9,
-            anchor='center'
+        self.about_button: tkinter.Label = tkinter.Label(
+            self,
+            text='About YAQN',
         )
+
+        self.about_button.pack()
 
         self.about_button.bind('<Button-1>', self.display_about_menu)
 
