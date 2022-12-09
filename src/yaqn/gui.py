@@ -128,9 +128,12 @@ class Gui(tkinter.Tk):
         # Apply the correct position of the window
         self.geometry(f'{self.window_width}x{self.window_height}+{calculated_width}+{calculated_height}')
 
-        # Make the window visible again after update the window
-        self.update()
+        # Detect when the window has finally moved and make it visible
+        self.bind("<Configure>", self.make_window_visible)
+
+    def make_window_visible(self, event: tkinter.Event):
         self.attributes('-alpha', 1.0)
+        self.bind("<Configure>", None)
 
     def display_about_menu(self, event: tkinter.Event | None = None) -> None:
         if self.about_menu_open == False:
