@@ -110,6 +110,8 @@ class Gui(tkinter.Tk):
         self.after(1, self.scrollbar_loop)
 
     def set_window_position(self):
+        self.attributes('-alpha', 0.0)
+
         # Force an update to get the real size of the window
         self.update()
         
@@ -125,6 +127,10 @@ class Gui(tkinter.Tk):
 
         # Apply the correct position of the window
         self.geometry(f'{self.window_width}x{self.window_height}+{calculated_width}+{calculated_height}')
+
+        # Make the window visible again after update the window
+        self.update()
+        self.attributes('-alpha', 1.0)
 
     def display_about_menu(self, event: tkinter.Event | None = None) -> None:
         if self.about_menu_open == False:

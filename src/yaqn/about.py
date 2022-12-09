@@ -121,15 +121,16 @@ class About(tkinter.Toplevel):
         window_width: int = self.winfo_width()
         window_height: int = self.winfo_height()
 
-        screen_width: int = self.winfo_screenwidth()
-        screen_height: int = self.winfo_screenheight()
+        parent_window_center_x: int = parent_window_position_x + parent_window_size_x/2
+        parent_window_center_y: int = parent_window_position_y + parent_window_size_y/2
 
         # Calculate the coordinates for the top left of the window
-        calculated_width: int = int(parent_window_position_x + parent_window_size_x/2 - window_width/2)
-        calculated_height: int = int(parent_window_position_y - window_height/8)
+        calculated_width: int = int(parent_window_center_x - window_width/2)
+        calculated_height: int = int(parent_window_center_y - window_height/2)
 
         # Apply the correct position of the window
         self.geometry(f'{window_width}x{window_height}+{calculated_width}+{calculated_height}')
 
-        # Make the window visible again
+        # Make the window visible again after update the window
+        self.update()
         self.attributes('-alpha', 1.0)
