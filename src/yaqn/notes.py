@@ -29,7 +29,7 @@ def save_note(note_title: str, note_data: str, config_data: config_data):
         if no_firstline:
             # Split the text of the note in lines, discard the first line and convert to string
             note_list_modified: list[str] = note_data.split('\n')[1:]
-            note_data = str().join(note_list_modified)
+            note_data = '\n'.join(note_list_modified)
 
         # Get the note path and check if its valid
         note_path: Path = Path(notes_dir_path, f'{note_filename}.{extension}')
