@@ -58,6 +58,6 @@ Use the command `yaqn --restore` to regenerate the configuration with its defaul
 
 Created with :heart: by [Kutu](https://kutu-dev.github.io/).
 > - GitHub - [kutu-dev](https://github.com/kutu-dev)
-> - Twitter - [@kutu-dev](https://twitter.com/kutu_dev)
+> - Twitter - [@kutu_dev](https://twitter.com/kutu_dev)
 
 Logo of the app created by [vladlucha](https://macosicons.com/#/u/vladlucha) (account deleted unfortunately) in [MacOS Icons](https://macosicons.com/#/).
