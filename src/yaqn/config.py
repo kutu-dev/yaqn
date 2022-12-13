@@ -108,6 +108,9 @@ def read_config(custom_path: Path | None = None) -> config_data:
     with open(config_path, 'rb') as config:
         data: dict[str, typing.Any] = tomllib.load(config)
 
+        if data['notes_path'] == 'default':
+            data['notes_path'] = DEFAULT_NOTES_PATH
+
         return config_data(
             Path(data['notes_path']),
             data['extension'],

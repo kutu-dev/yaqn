@@ -45,7 +45,7 @@ And this is its structure:
 
 | Parameter | Description |
 | --- | --- |
-| `notes_path` | Define the path to the directory the notes will be saved. |
+| `notes_path` | Define the path to the directory the notes will be saved. You can use the word `default` to point to the generic notes path. |
 | `extension` | Define the extension the notes will be saves. _Remember to **not** put `.` before the extension itself._ |
 | `no_whitespaces` | Define if YAQN should convert all whitespaces to hyphens `-` in the file name. |
 | `no_uppercase` | Define if YAQN should convert all uppercase letters to lowercase. |

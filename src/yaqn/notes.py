@@ -37,7 +37,7 @@ def save_note(note_title: str, note_data: str, config_data: config_data):
 
         # Get the textbox data and save it
         note:str = note_data
-
+        
         note_path.touch()
         with open(note_path, 'w') as file:
             file.write(note)
