@@ -17,6 +17,7 @@ class config_data():
     no_whitespaces: bool
     no_uppercase: bool
     no_firstline: bool
+    no_window_decoration: bool
 
 def init_config(custom_path: Path | None = None) -> Path:
     """
@@ -69,7 +70,8 @@ def check_config(config_path: Path) -> None:
                 'extension': str(),
                 'no_whitespaces': bool(),
                 'no_uppercase': bool(),
-                'no_firstline': bool()
+                'no_firstline': bool(),
+                'no_window_decoration': bool()
                 }:
                 pass
             case _:
@@ -92,10 +94,11 @@ def regenerate_config(config_path: Path, silent: bool = False) -> None:
         config.writelines([
             f'notes_path = \'{DEFAULT_NOTES_PATH}\'',
             f'\nextension = \'{DEFAULT_EXTENSION}\'',
-            f'\nno_whitespaces = false',
-            f'\nno_uppercase = false',
-            f'\nno_firstline = false',
-            f'\n'
+            '\nno_whitespaces = false',
+            '\nno_uppercase = false',
+            '\nno_firstline = false',
+            '\nno_window_decoration = false'
+            '\n'
         ])
 
 def read_config(custom_path: Path | None = None) -> config_data:
@@ -116,7 +119,8 @@ def read_config(custom_path: Path | None = None) -> config_data:
             data['extension'],
             data['no_whitespaces'],
             data['no_uppercase'],
-            data['no_firstline']
+            data['no_firstline'],
+            data['no_window_decoration']
         )
 
 def restore_config(custom_path: Path | None = None) -> None:

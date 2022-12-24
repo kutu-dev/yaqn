@@ -9,7 +9,7 @@ import sys
 def main() -> None:
     parser: ArgumentParser = ArgumentParser(
         prog='yaqn',
-        description='A markdown quicknote app made in python and gtk.',
+        description='A markdown quicknote app made in python and tkinter.',
         epilog='Created with ♥ by Kutu (https://kutu-dev.github.io/)'
     )
 

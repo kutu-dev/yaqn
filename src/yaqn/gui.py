@@ -19,9 +19,13 @@ class Gui(tkinter.Tk):
         self.resizable(False, False)
         self.title('New Note')
 
+        if self.user_config.no_window_decoration:
+            self.overrideredirect(True)
+
         # Set the logo of the app and make it MacOS compatible
         logo_path: Path = get_logo_path_high_res()
         logo: tkinter.Image = tkinter.Image('photo', file=f'{logo_path}')
+
         # Disable type checking because _w is a internal Tkinter var and cant be detected by type checkers
         self.tk.call('wm','iconphoto', self._w, logo)  # type: ignore
 

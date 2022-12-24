@@ -26,7 +26,7 @@ Your configuration file is saved by default in:
 ### Custom config path
 You can use your custom path for the config using `--config`:
 ```
-> yaqn ---config /path/to/config/directory
+> yaqn --config /path/to/config/directory
 ```
 ### Check the config file integrity
 The argument `--check` allows you to create, check and repair the config file, just run the command and it will analyze the config:
